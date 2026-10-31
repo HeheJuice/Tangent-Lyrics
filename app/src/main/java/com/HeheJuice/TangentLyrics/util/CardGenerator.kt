@@ -27,35 +27,64 @@ object CardGenerator {
 
     fun generateCard(context: Context, music: PickedMusic): Bitmap {
         val width = 2160
-        val height = 2840 
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val margin = 160f
+        val imgSize = width - (margin * 2)
+        
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val showAppIcon = prefs.getBoolean("show_app_icon", false)
+
+        // ★ 準備字體與畫筆，以便預先計算文字高度
+        val customTypeface = loadTypeface(context, bold = true)
+
+        val titlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.WHITE
+            textSize = 152f
+            typeface = customTypeface
+            textAlign = Paint.Align.LEFT // ★ 改為左對齊
+        }
+        
+        val artistPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.parseColor("#E0E0E0")
+            textSize = 96f
+            typeface = customTypeface
+            textAlign = Paint.Align.LEFT // ★ 改為左對齊
+        }
+
+        // 計算文字高度
+        val titleFm = titlePaint.fontMetrics
+        val artistFm = artistPaint.fontMetrics
+        val titleHeight = titleFm.descent - titleFm.ascent
+        val artistHeight = artistFm.descent - artistFm.ascent
+        
+        val textTopMargin = 120f // 圖片與文字的間距
+        val textGap = 40f        // 標題與歌手的間距
+        val bottomMargin = margin // 底部留白
+        
+        // ★ 動態計算卡片高度：上方留白 + 圖片 + 文字間距 + 標題 + 歌手間距 + 歌手 + 底部留白 + (若有標籤則加高)
+        val iconSpace = if (showAppIcon) 200f else 0f
+        val height = margin + imgSize + textTopMargin + titleHeight + textGap + artistHeight + bottomMargin + iconSpace
+
+        val bitmap = Bitmap.createBitmap(width, height.toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        val rectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
+        val rectF = RectF(0f, 0f, width.toFloat(), height)
 
         val cardRadius = 120f
         val cardPath = Path().apply { addRoundRect(rectF, cardRadius, cardRadius, Path.Direction.CW) }
         canvas.save()
         canvas.clipPath(cardPath)
 
+        // 繪製背景漸層
         val art = music.albumArt
         val palette = extractPalette(art)
-        val c1 = palette[0]
-        val c2 = palette[1]
-        val c3 = palette[2]
-
         val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         bgPaint.shader = LinearGradient(
-            0f, 0f, width.toFloat(), height.toFloat(),
-            intArrayOf(c1, c2, c3),
+            0f, 0f, width.toFloat(), height,
+            intArrayOf(palette[0], palette[1], palette[2]),
             null, Shader.TileMode.CLAMP
         )
         canvas.drawRect(rectF, bgPaint)
 
-        val textColor = Color.WHITE
-        val subTextColor = Color.parseColor("#E0E0E0")
-
-        val margin = 160f
-        val imgSize = width - (margin * 2)
+        // 繪製專輯封面
         val imgRect = RectF(margin, margin, margin + imgSize, margin + imgSize)
         val imgPath = Path().apply { addRoundRect(imgRect, 96f, 96f, Path.Direction.CW) }
         
@@ -71,48 +100,20 @@ object CardGenerator {
         }
         canvas.restore()
 
-        val spaceTop = imgRect.bottom
-        val spaceBottom = height.toFloat()
-        val spaceCenterY = spaceTop + (spaceBottom - spaceTop) / 2f
-
-        val customTypeface = loadTypeface(context, bold = true)
-
-        val titlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = textColor
-            textSize = 152f
-            typeface = customTypeface
-            textAlign = Paint.Align.CENTER
-        }
-        
-        val artistPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = subTextColor
-            textSize = 96f
-            typeface = customTypeface
-            textAlign = Paint.Align.CENTER
-        }
-
-        val titleFm = titlePaint.fontMetrics
-        val artistFm = artistPaint.fontMetrics
-        
-        val titleHeight = titleFm.descent - titleFm.ascent
-        val artistHeight = artistFm.descent - artistFm.ascent
-        val textGap = 64f
-        
-        val totalTextHeight = titleHeight + textGap + artistHeight
-        val textBlockTopY = spaceCenterY - (totalTextHeight / 2f)
-        
-        val titleBaseline = textBlockTopY - titleFm.ascent
+        // ★ 計算文字 Y 軸位置 (從圖片底部往下推算)
+        val textStartY = imgRect.bottom + textTopMargin
+        val titleBaseline = textStartY - titleFm.ascent
         val artistBaseline = titleBaseline + titleFm.descent + textGap - artistFm.ascent
 
+        // ★ 繪製文字 (X 軸與圖片左邊緣 margin 對齊)
         val titleText = ellipsizeText(music.title, titlePaint, (width - margin * 2))
-        canvas.drawText(titleText, width / 2f, titleBaseline, titlePaint)
+        canvas.drawText(titleText, margin, titleBaseline, titlePaint)
 
         val artistText = ellipsizeText(music.artist, artistPaint, (width - margin * 2))
-        canvas.drawText(artistText, width / 2f, artistBaseline, artistPaint)
+        canvas.drawText(artistText, margin, artistBaseline, artistPaint)
 
-        // ★ 繪製左下角 App Icon 和名字
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        if (prefs.getBoolean("show_app_icon", false)) {
+        // ★ 繪製左下角 App Icon 和名字 (因為高度變了，所以用 height - margin 計算)
+        if (showAppIcon) {
             drawAppIcon(context, canvas, margin, height - margin)
         }
 
@@ -131,8 +132,7 @@ object CardGenerator {
 
             val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = Color.WHITE
-                textSize = 64f // 稍微調大一點點以配合極寬字體
-                // ★ 修改：使用 MUSIC 的極限字體
+                textSize = 64f
                 this.typeface = AppFont.music(context) 
                 textAlign = Paint.Align.LEFT
             }

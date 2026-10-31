@@ -130,10 +130,30 @@ object LyricsCardGenerator {
         
         val textMaxWidth = finalWidth - textLeft - margin
         val titleText = ellipsizeText(music.title, titlePaint, textMaxWidth)
-        canvas.drawText(titleText, textLeft, margin + 120f, titlePaint)
-
         val subText = ellipsizeText("Song · ${music.artist}", subTextPaint, textMaxWidth)
-        canvas.drawText(subText, textLeft, margin + 230f, subTextPaint)
+
+        // ★ 計算完美垂直居中對齊的基準線
+        val titleFm = titlePaint.fontMetrics
+        val subTextFm = subTextPaint.fontMetrics
+        
+        val textGap = 30f // 標題與副標題之間的間距
+        val titleHeight = titleFm.descent - titleFm.ascent
+        val subTextHeight = subTextFm.descent - subTextFm.ascent
+        val totalTextHeight = titleHeight + textGap + subTextHeight
+
+        // 取得圖片垂直中心點
+        val textCenterY = imgRect.centerY()
+        
+        // 計算整個文字區塊的頂部 Y 座標
+        val textBlockTop = textCenterY - (totalTextHeight / 2f)
+
+        // 算出標題和副標題的 Baseline
+        val titleBaseline = textBlockTop - titleFm.ascent
+        val subTextBaseline = titleBaseline + titleFm.descent + textGap - subTextFm.ascent
+
+        // 畫出文字
+        canvas.drawText(titleText, textLeft, titleBaseline, titlePaint)
+        canvas.drawText(subText, textLeft, subTextBaseline, subTextPaint)
 
         val lyricsStartY = headerHeight + gap
         canvas.save()
@@ -160,8 +180,7 @@ object LyricsCardGenerator {
 
             val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = Color.WHITE
-                textSize = 64f // 稍微調大一點點以配合極寬字體
-                // ★ 修改：使用 MUSIC 的極限字體
+                textSize = 64f
                 this.typeface = AppFont.music(context)
                 textAlign = Paint.Align.LEFT
             }

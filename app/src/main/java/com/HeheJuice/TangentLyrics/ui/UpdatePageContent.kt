@@ -264,28 +264,28 @@ class UpdatePageContent(private val activity: AppCompatActivity) {
             primaryContainerColor, tertiaryContainerColor, cardCornerRadiusPx)
 
         val appInfoCard = LinearLayout(activity).apply {
-    orientation = LinearLayout.VERTICAL
-    gravity = Gravity.CENTER
-    clipChildren = false
-    clipToPadding = false
-    // ★ 修改：直接使用漸變背景，移除 Ripple 包裝
-    background = gradientBg
-    
-    setPadding(dpToPx(24f), dpToPx(28f), dpToPx(24f), dpToPx(28f))
-    layoutParams = LinearLayout.LayoutParams(
-        LinearLayout.LayoutParams.MATCH_PARENT,
-        LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-        topMargin = dpToPx(8f)
-        bottomMargin = dpToPx(16f)
-    }
-    isClickable = true
-    isFocusable = true
-    setOnClickListener {
-        if (playAppNameAnimation(force = true)) {
-            OptimizeEngine.vibrateTick(activity)
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            clipChildren = false
+            clipToPadding = false
+            // ★ 修改：直接使用漸變背景，移除 Ripple 包裝
+            background = gradientBg
+            
+            setPadding(dpToPx(24f), dpToPx(28f), dpToPx(24f), dpToPx(28f))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                topMargin = dpToPx(8f)
+                bottomMargin = dpToPx(16f)
+            }
+            isClickable = true
+            isFocusable = true
+            setOnClickListener {
+                if (playAppNameAnimation(force = true)) {
+                    OptimizeEngine.vibrateTick(activity)
+                }
+            }
         }
-    }
-}
 
         val appIconDrawable = try {
             activity.packageManager.getApplicationIcon(activity.packageName)
@@ -306,18 +306,17 @@ class UpdatePageContent(private val activity: AppCompatActivity) {
         val pillBg = primaryContainerColor
         val pillFg = onPrimaryContainerColor
 
-        // 1. 找到建立 sineAppName 的地方：
-val sineAppName = Sine(activity).apply {
-    layoutParams = LinearLayout.LayoutParams(
-        LinearLayout.LayoutParams.WRAP_CONTENT,
-        LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-        gravity = Gravity.CENTER_HORIZONTAL
-    }
-    textSizeSp = 20f
-    typeface = Typeface.DEFAULT_BOLD
-    setText(activity.getString(R.string.app_name), onPrimaryContainerColor)
-    tag = AppFont.SKIP_FONT_TAG // ★ 加入這行
-}
+        val sineAppName = Sine(activity).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                gravity = Gravity.CENTER_HORIZONTAL
+            }
+            textSizeSp = 20f
+            typeface = Typeface.DEFAULT_BOLD
+            setText(activity.getString(R.string.app_name), onPrimaryContainerColor)
+            tag = AppFont.SKIP_FONT_TAG // ★ 加入這行
+        }
         appNameSine = sineAppName
         appInfoCard.addView(sineAppName)
         sineAppName.doOnLayout { playAppNameAnimation() }
@@ -354,29 +353,31 @@ val sineAppName = Sine(activity).apply {
                 })
             }
 
+            val musicSine = Sine(activity).apply {
+                textSizeSp = 14f
+                setText(keyword, onPrimaryContainerColor)
+                typeface = AppFont.music(activity)
+                alpha = 0.8f
+                isClickable = true
+                isFocusable = true
+                tag = AppFont.SKIP_FONT_TAG // ★ 加入這行
+            }
 
-val musicSine = Sine(activity).apply {
-    textSizeSp = 14f
-    setText(keyword, onPrimaryContainerColor)
-    typeface = AppFont.music(activity)
-    alpha = 0.8f
-    isClickable = true
-    isFocusable = true
-    tag = AppFont.SKIP_FONT_TAG // ★ 加入這行
-}
-
+            // ★ 修改：改用狀態切換，允許來回切換
             val tapTimes = mutableListOf<Long>()
-            var isMusicSwitched = false
+            var isShowingYou = false
 
             musicSine.setOnClickListener {
-                if (isMusicSwitched) return@setOnClickListener
-                
                 val now = SystemClock.uptimeMillis()
                 tapTimes.add(now)
                 tapTimes.removeAll { now - it > 5000 }
 
                 if (tapTimes.size >= 3) {
-                    isMusicSwitched = true
+                    // ★ 成功觸發後清空計數，讓下次可以重新計算 3 下
+                    tapTimes.clear()
+                    
+                    // ★ 切換狀態
+                    isShowingYou = !isShowingYou
                     OptimizeEngine.vibrateThud(activity)
                     
                     // ★ 加入平滑佈局位移動畫
@@ -384,8 +385,10 @@ val musicSine = Sine(activity).apply {
                     transition.duration = 300L
                     TransitionManager.beginDelayedTransition(descRow, transition)
 
-                    musicSine.setText("YOU", onPrimaryContainerColor)
+                    val newText = if (isShowingYou) "YOU" else "MUSIC"
+                    musicSine.setText(newText, onPrimaryContainerColor)
                     musicSine.typeface = AppFont.music(activity)
+                    
                     musicSine.post {
                         // ★ 加速 Sine 動畫 (750 -> 400, 50 -> 25)
                         musicSine.animateSineWave(

@@ -964,11 +964,14 @@ class TangentHome : AppCompatActivity() {
             clipToOutline = true
         }
 
-        card.addView(TextView(this).apply {
-            text = getString(R.string.select_lyrics_title)
+        // ★ 修改：將標題抽成變數，以便後續更新計數器
+        val titleView = TextView(this).apply {
+            text = "${getString(R.string.select_lyrics_title)} [0/8]"
             textSize = 22f; setTextColor(onSurfaceColor); setTypeface(typeface, Typeface.BOLD)
             setPadding(dpToPx(24f), dpToPx(24f), dpToPx(24f), dpToPx(4f))
-        })
+        }
+        card.addView(titleView)
+
         card.addView(TextView(this).apply {
             text = getString(R.string.select_lyrics_desc)
             textSize = 14f; setTextColor(onSurfaceVariantColor)
@@ -1021,6 +1024,9 @@ class TangentHome : AppCompatActivity() {
             GradientDrawable().apply { cornerRadii = floatArrayOf(topR, topR, topR, topR, botR, botR, botR, botR); setColor(color) }
 
         fun updateSelection() {
+            // ★ 修改：每次選取變更時，更新標題的計數器
+            titleView.text = "${getString(R.string.select_lyrics_title)} [${selectedIndices.size}/8]"
+
             rowRefs.forEachIndexed { idx, ref ->
                 val isSelected = selectedIndices.contains(idx)
                 val content = makeRowBg(if (isSelected) primaryContainerColor else rowBg, ref.topR, ref.botR)
