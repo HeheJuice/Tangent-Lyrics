@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         App
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="app_name">Tangent Lyrics</string>
+    <string name="back_content_desc">Back</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Home / Updater tabs
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="nav_home">Home</string>
+    <string name="nav_updater">Updater</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Language
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="settings_language">Language</string>
+    <string name="settings_language_desc">Choose the app display language</string>
+    <string name="language_picker_title">Select language</string>
+    <string name="language_picker_subtitle">Choose a display language for the app</string>
+    <string name="lang_follow_system">Follow system</string>
+    <string name="lang_english">English</string>
+    <string name="lang_japanese">日本語</string>
+    <string name="lang_korean">한국어</string>
+    <string name="lang_zh_hk">繁體中文（香港）</string>
+    <string name="lang_zh_tw">繁體中文（台灣）</string>
+    <string name="lang_zh_cn">简体中文</string>
+    <string name="lang_zh_fake">偽中國語</string>
+    <string name="lang_yue">粵語</string>
+    <string name="lang_yue_cn">粵語（簡體）</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Shared dialog buttons
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Updater — Header & version
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="setting_updates_and_about">Check for Updates &amp; About App</string>
+    <string name="version_format">Version %1$s</string>
+    <string name="version_tag_release">Release</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Updater — Status
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="update_checking">Checking for updates…</string>
+    <string name="update_new_version">New version available: %1$s</string>
+    <string name="update_latest">You are on the latest version (%1$s)</string>
+    <string name="update_server_error">Failed to check updates (server error)</string>
+    <string name="update_connection_error">Could not connect to GitHub</string>
+    <string name="sign_unmatches">Update checker disabled due to unofficial app version</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Updater — Download / Install
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="zero_percent">0%</string>
+    <string name="progress_format">%1$d%%</string>
+    <string name="action_download">Download</string>
+    <string name="action_install">Install</string>
+    <string name="download_failed">Download failed</string>
+    <string name="allow_unknown_sources">Please allow installation from unknown sources</string>
+    <string name="no_app_found_install">No app found to install APK</string>
+    <string name="install_error">Install error: %1$s</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Updater — Info group (Source / License / Privacy)
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="view_source_code">View Repository</string>
+    <string name="desc_source">Check for repository of this app on GitHub</string>
+    <string name="view_license">View License</string>
+    <string name="desc_license">View 3rd Party Usage and License for them and this app</string>
+    <string name="view_privacy">Review Privacy Policy</string>
+    <string name="desc_privacy">Learn how this application manages user data</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Updater — Acknowledgments
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="acknowledgments">Acknowledgments</string>
+    <string name="credit_hehejuice_desc">Developer of this App</string>
+    <string name="credit_mortis_desc">Monet Color Helps</string>
+    <string name="credit_material_desc">Material Design components used in this app</string>
+    <string name="credit_google_desc">Uses Material Design icons and Google Sans Flex.</string>
+    <string name="credit_noto_desc">Noto Fonts are used in this app</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Welcome — Page 1
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="welcome_to">Welcome to</string>
+    <string name="welcome_line_1">Tangent Lyrics</string>
+    <string name="welcome_disclaimer">Turn your favorite music into beautiful lyric cards.</string>
+    <string name="tangent_lyrics_app_desc">Tangent Lyrics lets you turn songs into shareable cards — pick a track, style the lyrics, and export a polished image ready to post on your feed.</string>
+    <string name="welcome_continue">Continue</string>
+    <string name="tangent_exit">Exit</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Welcome — Page 2 (Review)
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="welcome_for_your_review">For your review</string>
+    <string name="welcome_agree_to_terms">I agree to the Privacy Policy and License</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Welcome — Page 5 (Unknown Signature)
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="welcome_unknown_signature_title">Unknown Signature</string>
+    <string name="welcome_unknown_signature_desc">This app is not signed by the official developer. It may be a modified or repackaged build, and could pose a security risk. We strongly recommend downloading the official version from the repository below.</string>
+    <string name="welcome_unknown_signature_acknowledge">I understand the danger and want to continue anyway</string>
+    <string name="welcome_continue_anyway">Continue Anyway</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Welcome — Page 4 (All Set / Updated)
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="all_set_up">All Set!</string>
+    <string name="all_set_up_desc">Everything is ready.</string>
+    <string name="all_set_up_icon_desc">All set</string>
+    <string name="enter_app">Enter App</string>
+    <string name="update_success_title">Updated Successfully</string>
+    <string name="update_success_desc">We hope you enjoy the new version!</string>
+    <string name="whats_new_title">What\'s New?</string>
+    <string name="whats_new_desc">Tap to explore what\'s new</string>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Cosine — Details of Acknowledge
+         ═══════════════════════════════════════════════════════════ -->
+    <string name="cosine_details_title">Details of Acknowledge</string>
+    <string name="cosine_group_data">Data</string>
+    <string name="cosine_group_links">Related Links</string>
+    <string name="cosine_github_title">GitHub</string>
+    <string name="cosine_github_desc">View the repository and profile on GitHub</string>
+    <string name="cosine_open_failed">No app found to open this link</string>
+    <string name="cosine_other_projects_title">Check out other projects by "%1$s"</string>
+
+<string name="nav_settings">Settings</string>
+<string name="add_music_content_desc">Add music</string>
+<!-- ═══════════════ Home — Music preview ═══════════════ -->
+<string name="no_music_selected">Tap + to choose a song</string>
+<string name="no_music_hint">Your song details and lyrics will appear here.</string>
+<string name="unknown_title">Unknown Title</string>
+<string name="unknown_artist">Unknown Artist</string>
+<string name="no_lyrics">No lyrics available</string>
+<string name="loading_music">Loading music…</string>
+<string name="failed_load_music">Failed to load music</string>
+<string name="add_lyrics_manual">+ Write lyrics</string>
+<string name="lyrics_hint">Paste lyrics...</string>
+<string name="add_lyrics_title">Add lyrics</string>
+<string name="action_save">Save</string>
+<!-- 弹窗基础按钮 -->
+<string name="tangent_cancel">Cancel</string>
+<string name="action_select">Select</string>
+
+<!-- 生成选项弹窗 -->
+<string name="generate_card_options_title">Options</string>
+<string name="generate_card_options_desc">What would you like to do?</string>
+<string name="generate_card_generate">Generate music card</string>
+<string name="generate_card_reselect">Reselect music</string>
+
+<!-- 加载与保存提示 -->
+<string name="generating_card">Generating…</string>
+<string name="card_saved">Saved successfully</string>
+<string name="card_save_failed">Save failed</string>
+<string name="settings_group_customization">Customization</string>
+<string name="settings_lyrics_time_title">Display time at the right of the lyrics</string>
+<string name="settings_lyrics_time_desc">Show time tags alongside the lyrics.</string>
+<!-- 第二页：歌词选项 -->
+<string name="generate_card_lyrics_title">Lyrics</string>
+<string name="generate_card_lyrics_desc">Include lyrics in the card?</string>
+<string name="generate_card_select_lyrics">Select lyrics</string>
+<string name="generate_card_no_lyrics">No need for lyrics</string>
+
+<!-- 歌词选择器 -->
+<string name="select_lyrics_title">Select Lyrics</string>
+<string name="select_lyrics_desc">Choose up to 8 lines</string>
+
+<!-- 新增按钮 -->
+<string name="tangent_back">Back</string>
+<string name="tangent_continue">Continue</string>
+<string name="tangent_generate">Generate</string>
+<string name="no_lyrics_available">No lyrics available for this song.</string>
+<!-- 选项描述 -->
+<string name="generate_card_generate_desc">Create a new card with your music</string>
+<string name="generate_card_reselect_desc">Choose a different song</string>
+<string name="generate_card_select_lyrics_desc">Pick specific lines for the card</string>
+<string name="generate_card_no_lyrics_desc">Just use the song info</string>
+<string name="settings_app_icon_title">Add App Watermark</string>
+<string name="settings_app_icon_desc">Include our app icon and name on generated cards. It helps us grow when you share!</string>
+<string name="settings_group_output_images">Customization of output images</string>
+<string name="settings_compact_music_title">Compact music info</string>
+<string name="settings_compact_music_desc">Show image, title and artist in a single row</string>
+<!-- EN -->
+<string name="app_desc_short">Made with love for MUSIC</string>
+</resources>

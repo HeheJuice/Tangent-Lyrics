@@ -1,0 +1,186 @@
+================================================================================
+                           PRIVACY POLICY
+                         Tangent Lyrics
+================================================================================
+                          Effective Date: November 1, 2026
+================================================================================
+
+[ 1. OUR COMMITMENT TO PRIVACY ]
+================================================================================
+
+The App is built on a "Local-First" principle. We do not collect, transmit, or
+share your personal content. Audio files, media metadata, album artwork,
+embedded lyrics, generated images, app language preferences, and theme settings
+are processed and stored strictly on your local device.
+
+Internet connectivity is used *exclusively* for optional application software
+updates (including signature verification) and for loading the public
+HeheJuice avatars shown in the credits screen. It is never required for core
+functionality such as generating lyric cards or theme customization.
+
+---
+
+[ 2. LOCAL DATA STORAGE & HANDLING ]
+================================================================================
+
+All data remains within your device's private storage directories:
+
+  * Media Metadata & Lyrics Processing
+    When you select an audio file, the App uses Android's native system APIs
+    and its own zero-dependency byte parsing to read the file locally. It
+    extracts the title, artist, duration, album artwork, and any embedded
+    lyrics (e.g., ID3v2 USLT frames or Vorbis Comments). This data is processed
+    in memory or cached locally to render the lyric cards. No third-party
+    audio parsing libraries are used.
+
+  * Cached Music State (Last Selected Song)
+    To provide a seamless experience, the App caches the metadata (title,
+    artist, duration, and lyrics) of the last selected song, along with a copy
+    of its album artwork, into your device's private storage. This allows the
+    App to instantly restore your last session upon restarting.
+    Storage locations:
+      - SharedPreferences: music_cache
+      - Internal Storage: filesDir/cached_album_art.png
+    You can clear this cache at any time by clearing the App's data.
+
+  * Generated Images
+    The images (cards) you generate are saved to the location you choose via
+    Android's Storage Access Framework (SAF). The App does not upload these
+    images to any server.
+
+  * App-Level Preferences
+    Onboarding state (whether the welcome screen has been acknowledged) and
+    UI settings (such as lyric time tags and app watermark preferences) are
+    stored locally in:
+    app_prefs
+
+  * App Language Preference
+    If you select a specific display language from the App's language picker,
+    the chosen language tag is stored by the AndroidX AppCompat library in its
+    internal per-app locale record. This is required to restore the language
+    on the next launch.
+
+  * Cached Update Files
+    Downloaded update packages are stored temporarily in:
+    cacheDir/app-release.apk
+    This file is used only for user-initiated installation of an update.
+
+  * Cached GitHub Avatars
+    Public GitHub avatars for the credits screen are cached locally in the
+    App's cache directory. These are used only for the credits section.
+
+---
+
+[ 3. NETWORK ACCESS & APP UPDATES ]
+================================================================================
+
+  * Purpose of Internet Permission
+    The App connects to the internet solely to check for, verify, and download
+    application update packages from the project's GitHub Releases page
+    (api.github.com and github.com), and to load public GitHub avatars.
+
+  * Complete User Control
+    Network access is entirely optional. You can disable internet permissions
+    for the App at any time via your device settings, or use the App
+    completely offline without affecting card generation.
+
+  * Zero Personal Data Transmitted
+    Update checks send only standard version-related requests. Your media
+    files, lyrics, generated images, and personal data are never transmitted
+    to any server.
+
+  * Signature Verification
+    Before checking for updates, the App verifies its own digital signature
+    against the official release certificate SHA-256:
+    bbd053c0a67dbfc7938a3086d13325bfa212d550d6e6cbf39e48edf6b52bfc0d
+    This ensures you are running an authentic, untampered version.
+
+---
+
+[ 4. DATA TRANSMISSION & THIRD-PARTY ACCESS ]
+================================================================================
+
+  * No Sharing
+    Your media files, extracted lyrics, and generated images never leave your
+    physical device.
+
+  * No Analytics or Tracking
+    The App contains no third-party tracking SDKs, advertising networks, or
+    behavioral telemetry services. We do not monitor how you use the App.
+
+  * No Advertising
+    The App does not display ads and does not use advertising identifiers.
+
+---
+
+[ 5. DEVICE PERMISSIONS & SYSTEM INTEGRATION ]
+================================================================================
+
+The App requests native Android permissions and special access only when
+strictly necessary:
+
+  * Read Media Audio / SAF
+    Required to read the audio files you explicitly select to extract metadata
+    and lyrics. The App does not scan your entire audio library; it only
+    accesses the specific files you choose.
+
+  * Internet Access
+    Used exclusively for optional update checks, APK downloads, and signature
+    verification. Can be restricted or disabled without breaking offline core
+    functionality.
+
+  * Install Unknown Apps / Request Install Packages
+    Used only when you choose to download and install an update. The App shares
+    the downloaded APK with the system package installer via FileProvider.
+
+---
+
+[ 6. DATA RETENTION & DELETION ]
+================================================================================
+
+  * User Control
+    You may clear the App's cache or clear all App data at any time through
+    Android System Settings or the App's own settings.
+
+  * Permanent Deletion
+    Clearing App data or uninstalling the App permanently removes all stored
+    preferences, cached APK files, cached avatar images, and the cached music
+    metadata & album artwork from your device.
+
+  * No Server-Side Data
+    The App does not create accounts, does not upload user data, and does not
+    maintain any server-side profile or backup.
+
+---
+
+[ 7. OPEN SOURCE ]
+================================================================================
+
+This App is fully open source and licensed under the GPL-3.0 License.
+You can review the exact source code to verify its privacy and security
+practices at:
+https://github.com/HeheJuice/Tangent-Lyrics
+
+---
+
+[ 8. CHANGES TO THIS POLICY ]
+================================================================================
+
+This Privacy Policy may be updated periodically to reflect software
+improvements or functional updates. Revisions will be versioned alongside app
+releases.
+
+---
+
+[ 9. CONTACT INFORMATION ]
+================================================================================
+
+If you have questions regarding this Privacy Policy or how your local data is
+handled, please reach out through:
+
+  * GitHub Issues:
+    https://github.com/HeheJuice/Tangent-Lyrics/issues
+
+================================================================================
+                              END OF POLICY
+================================================================================
